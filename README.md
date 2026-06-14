@@ -99,7 +99,7 @@ The repository returns `Either<Failure, List<Employee>>` instead of throwing. Er
 `EmployeesBloc` → `Factory` (fresh instance per `BlocProvider`).
 Use cases and repositories → `LazySingleton` (stateless, safe to share).
 
-**`UISizes` + `flutter_screenutil`**
+**`UISizes` + `flutter_screenutil_plus`**
 All spacing, padding, and font sizes are defined in one place with `screenutil` units. Design changes are a single-file edit.
 
 ---
