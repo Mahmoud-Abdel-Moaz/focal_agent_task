@@ -6,26 +6,27 @@ import 'package:focal_agent_task/core/services/shared_pref_service.dart';
 import '../../../../core/error/exceptions.dart';
 import '../models/employee_model.dart';
 
-abstract class CashedEmployeesDataSource {
+abstract class CachedEmployeesDataSource {
   Future<List<EmployeeModel>?> getCachedEmployees();
 
   Future<void> cacheEmployees(List<EmployeeModel> employees);
 }
 
-class CashedEmployeesDataSourceImp implements CashedEmployeesDataSource {
+class CachedEmployeesDataSourceImp implements CachedEmployeesDataSource {
   List<EmployeeModel>? _cachedEmployees;
 
   @override
   Future<List<EmployeeModel>?> getCachedEmployees() async {
     try {
-      final cashedTextEmployees = await SharedPreferencesService.get(
+      if (_cachedEmployees != null) return _cachedEmployees;
+      final cachedTextEmployees = await SharedPreferencesService.get(
         SharedPreferencesKeys.employees,
       );
-      if (cashedTextEmployees == null) {
+      if (cachedTextEmployees == null) {
         return null;
       }
-      if (cashedTextEmployees.isNotEmpty) {
-        List<dynamic> jsonList = jsonDecode(cashedTextEmployees);
+      if (cachedTextEmployees.isNotEmpty) {
+        List<dynamic> jsonList = jsonDecode(cachedTextEmployees);
         _cachedEmployees = jsonList
             .map((item) => EmployeeModel.fromJson(item))
             .toList();
